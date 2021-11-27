@@ -16,7 +16,6 @@ An early-stage concept. A way to try D&D 5e combat builds and custom magic items
 - Space Station 13
 
 # To-Do
-- rough village
 - rough character
 - rough dungeon
 - rough monsters
