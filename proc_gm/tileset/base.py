@@ -5,7 +5,7 @@ import pygame
 import os
 
 def path(file_name):
-    return utils.root_path(os.path.join('assets', 'tilesets', file_name))
+    return utils.root_path(f'assets/tilesets/{file_name}')
 
 def spread(center, amount):
     return range(center-amount, center+amount+1)
