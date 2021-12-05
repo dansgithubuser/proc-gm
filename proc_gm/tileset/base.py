@@ -16,6 +16,11 @@ def march(start, length):
     else:
         return range(start+length+1, start+1)
 
+class Tile:
+    def __init__(self, layers, passable=True):
+        self.layers = layers
+        self.passable = passable
+
 class Tilemap:
     def __init__(self, w, h, tile=None):
         self.w = w

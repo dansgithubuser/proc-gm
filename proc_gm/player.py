@@ -24,7 +24,7 @@ class Player:
         if not self.state:
             self.state = action
 
-    def update(self):
+    def update(self, world):
         d = {
             'n' : ( 0, -1),
             'ne': ( 1, -1),
@@ -35,6 +35,11 @@ class Player:
             'w' : (-1,  0),
             'nw': (-1, -1),
         }.get(self.state)
+        if d:
+            tile = world.tiles.get(self.x + d[0], self.y + d[1])
+            if not tile or not tile.passable:
+                d = None
+                self.state = None
         if d:
             self.x_s += d[0]
             self.y_s += d[1]

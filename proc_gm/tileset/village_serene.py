@@ -1,4 +1,4 @@
-from .base import spread, march, Tilemap, Tileset
+from .base import spread, march, Tile, Tilemap, Tileset
 
 from .. import utils
 
@@ -27,12 +27,12 @@ class VillageSerene(Tileset):
             doodads = Tilemap(w, h)
             self._generate_roads(ground, doodads, w, h)
             self._generate_houses(ground, doodads, w, h)
-            if self.n_houses > 3: break
+            if self.n_houses >= 4: break
         self._finalize_roads(ground, doodads, w, h)
         self._generate_trees(ground, doodads, w, h)
         self._generate_rocks(ground, doodads, w, h)
         self._generate_flowers(ground, doodads, w, h)
-        return [ground.tiles, doodads.tiles]
+        return self._finalize(ground, doodads, w, h)
 
     def _generate_roads(self, ground, doodads, w, h):
         main_road_y = random.randint(h * 2 // 5, h * 3 // 5)
@@ -137,3 +137,14 @@ class VillageSerene(Tileset):
 
     def _generate_flowers(self, ground, doodads, w, h):
         pass
+
+    def _finalize(self, ground, doodads, w, h):
+        tiles = Tilemap(w, h)
+        for y in range(h):
+            for x in range(w):
+                tile = Tile([ground.get(x, y)])
+                if d := doodads.get(x, y):
+                    tile.layers.append(d)
+                tile.passable = not doodads.get(x, y)
+                tiles.set(x, y, tile)
+        return tiles

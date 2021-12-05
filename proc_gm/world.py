@@ -13,17 +13,15 @@ class World:
 
     def update(self, player_action):
         self.player.handle_action(player_action)
-        for i in self.entities: i.update()
+        for i in self.entities: i.update(self)
 
     def render(self, screen):
         screen_w, screen_h = screen.get_size()
         camera_x, camera_y = self.player.get_location()
-        for layer in self.tiles:
-            for y in range(self.h):
-                for x in range(self.w):
-                    tile = layer[y * self.w + x]
-                    if not tile: continue
-                    screen.blit(tile, self.to_view(x, y, camera_x, camera_y, screen_w, screen_h))
+        for y in range(self.h):
+            for x in range(self.w):
+                for layer in self.tiles.get(x, y).layers:
+                    screen.blit(layer, self.to_view(x, y, camera_x, camera_y, screen_w, screen_h))
         for entity in self.entities:
             x, y = entity.get_location()
             screen.blit(entity.get_image(), self.to_view(x, y, camera_x, camera_y, screen_w, screen_h))
