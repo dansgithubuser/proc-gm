@@ -5,7 +5,7 @@ import pygame
 import os
 
 def path(file_name):
-    return utils.root_path(os.path.join('assets', 'tilesets', file_name))
+    return utils.root_path(f'assets/tilesets/{file_name}')
 
 def spread(center, amount):
     return range(center-amount, center+amount+1)
@@ -15,6 +15,11 @@ def march(start, length):
         return range(start, start+length)
     else:
         return range(start+length+1, start+1)
+
+class Tile:
+    def __init__(self, layers, passable=True):
+        self.layers = layers
+        self.passable = passable
 
 class Tilemap:
     def __init__(self, w, h, tile=None):
